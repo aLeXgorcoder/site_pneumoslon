@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -24,7 +27,11 @@ class Album(models.Model):
         SINGLE = 'single', 'Сингл'
 
     title = models.CharField(max_length=200, verbose_name='Название альбома')
-    year = models.DateField(verbose_name='Год выхода')
+    year = models.IntegerField(
+        validators=[MinValueValidator(2010), MaxValueValidator(int(datetime.now().year))],
+        default=datetime.now().year,
+        verbose_name='Год релиза'
+    )
     cover = models.ImageField(upload_to='albums/', verbose_name='Обложка альбома')
     release_type = models.CharField(
         max_length=10,
