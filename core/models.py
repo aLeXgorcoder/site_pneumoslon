@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.utils.timezone import now
 
 
 class Concert(models.Model):
@@ -28,8 +29,8 @@ class Album(models.Model):
 
     title = models.CharField(max_length=200, verbose_name='Название альбома')
     year = models.IntegerField(
-        validators=[MinValueValidator(2010), MaxValueValidator(int(datetime.now().year))],
-        default=datetime.now().year,
+        validators=[MinValueValidator(2010), MaxValueValidator(now().year)],
+        default=now().year,
         verbose_name='Год релиза'
     )
     cover = models.ImageField(upload_to='albums/', verbose_name='Обложка альбома')
