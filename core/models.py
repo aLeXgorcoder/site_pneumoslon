@@ -16,3 +16,27 @@ class Concert(models.Model):
         verbose_name = 'Концерт'
         verbose_name_plural = 'Концерты'
         ordering = ['-date']
+
+
+class Album(models.Model):
+    class ReleaseType(models.TextChoices):
+        ALBUM = 'album', 'Альбом'
+        SINGLE = 'single', 'Сингл'
+
+    title = models.CharField(max_length=200, verbose_name='Название альбома')
+    year = models.DateField(verbose_name='Год выхода')
+    cover = models.ImageField(upload_to='albums/', verbose_name='Обложка альбома')
+    release_type = models.CharField(
+        max_length=10,
+        choices=ReleaseType.choices,
+        default=ReleaseType.ALBUM,
+        verbose_name='Тип релиза'
+    )
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Альбом'
+        verbose_name_plural = 'Альбомы'
+        ordering = ['-year']
