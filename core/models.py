@@ -47,3 +47,17 @@ class Album(models.Model):
         verbose_name = 'Альбом'
         verbose_name_plural = 'Альбомы'
         ordering = ['-year']
+
+
+class Song(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Название песни')
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='songs', verbose_name='Альбом')
+    duration = models.DurationField(verbose_name='Длительность')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Песня'
+        verbose_name_plural = 'Песни'
+        ordering = ['title']
